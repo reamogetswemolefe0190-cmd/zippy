@@ -772,44 +772,254 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color: _lookedUpVendor != null
-                      ? ZippyTheme.primaryGreen.withValues(alpha: 0.15)
-                      : Colors.white.withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(10),
+          if (_lookedUpVendor == null) ...[
+            // Ambient Connection Header
+            Row(
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.06),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.storefront_outlined,
+                    color: Colors.white70,
+                    size: 20,
+                  ),
                 ),
-                child: Icon(
-                  Icons.storefront_outlined,
-                  color: _lookedUpVendor != null
-                      ? ZippyTheme.primaryGreen
-                      : Colors.white70,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            _lookedUpVendor?.name ?? 'Enter till number',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                const SizedBox(width: 10),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Connect to Merchant',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
                         ),
-                        if (_lookedUpVendor != null) ...[
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        'Point camera, radar proximity, or tap phone',
+                        style: TextStyle(
+                          color: Color(0xFF94A3B8),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+
+            // 3 Ambient Physical Discovery Modes (Min 48px touch targets)
+            Row(
+              children: [
+                // 1. Scan Zippy
+                Expanded(
+                  child: TactileScale(
+                    child: InkWell(
+                      key: const Key('connectScanZippy'),
+                      onTap: _openQrScannerModal,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF16C784).withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFF16C784).withValues(alpha: 0.35)),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.qr_code_scanner_rounded, size: 16, color: ZippyTheme.primaryGreen),
+                            SizedBox(width: 5),
+                            Text(
+                              'Scan',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+
+                // 2. Nearby Radar
+                Expanded(
+                  child: TactileScale(
+                    child: InkWell(
+                      key: const Key('connectNearbyMerchant'),
+                      onTap: _openNearbyRadarModal,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1E293B),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.radar_rounded, size: 16, color: Color(0xFF38BDF8)),
+                            SizedBox(width: 5),
+                            Text(
+                              'Nearby',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+
+                // 3. NFC Tap
+                Expanded(
+                  child: TactileScale(
+                    child: InkWell(
+                      key: const Key('connectNfcTap'),
+                      onTap: _openNfcTapModal,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        constraints: const BoxConstraints(minHeight: 48),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1E293B),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.contactless_rounded, size: 16, color: Color(0xFFA78BFA)),
+                            SizedBox(width: 5),
+                            Text(
+                              'Tap',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // Discreet 4-Digit Till Fallback
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E293B).withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.tag_rounded, size: 15, color: Colors.white38),
+                  const SizedBox(width: 6),
+                  const Expanded(
+                    child: Text(
+                      'Or manual 4-digit till #',
+                      style: TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Container(
+                    width: 76,
+                    constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0F172A),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                    ),
+                    child: TextField(
+                      key: const Key('homeZippyNumberField'),
+                      controller: _merchantZippyController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      maxLength: 4,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                      decoration: const InputDecoration(
+                        counterText: '',
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(vertical: 15),
+                        hintText: '####',
+                        hintStyle: TextStyle(color: Colors.white24, fontSize: 13),
+                      ),
+                      onChanged: (val) => _lookupMerchant(val),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ] else ...[
+            // Connected Verified Merchant Card
+            Row(
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.storefront_outlined,
+                    color: ZippyTheme.primaryGreen,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              _lookedUpVendor!.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                           const SizedBox(width: 6),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
@@ -829,39 +1039,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ],
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      _lookedUpVendor != null
-                          ? '✓ Verified • ${_lookedUpVendor!.bankName}'
-                          : '4-digit merchant number',
-                      style: TextStyle(
-                        color: _lookedUpVendor != null
-                            ? ZippyTheme.primaryGreen
-                            : const Color(0xFF94A3B8),
-                        fontSize: 11,
-                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 2),
+                      Text(
+                        '✓ Verified • ${_lookedUpVendor!.bankName} • Till #${_lookedUpVendor!.zippyNumber}',
+                        style: const TextStyle(
+                          color: ZippyTheme.primaryGreen,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              if (_isLoadingVendor)
-                const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: ZippyTheme.primaryGreen),
-                )
-              else
                 Container(
-                  width: 76,
+                  width: 68,
                   constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   decoration: BoxDecoration(
                     color: const Color(0xFF1E293B),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
                   ),
                   child: TextField(
@@ -874,7 +1072,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 14,
                     ),
                     decoration: const InputDecoration(
                       counterText: '',
@@ -887,9 +1085,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     onChanged: (val) => _lookupMerchant(val),
                   ),
                 ),
-            ],
-          ),
-          if (_lookedUpVendor != null) ...[
+                const SizedBox(width: 6),
+                TactileScale(
+                  child: InkWell(
+                    key: const Key('clearConnectedVendorButton'),
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      setState(() {
+                        _merchantZippyController.clear();
+                        _lookedUpVendor = null;
+                        _vendorNotFound = false;
+                      });
+                    },
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1E293B),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                      ),
+                      child: const Text(
+                        'Change',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
             Container(
               key: const Key('homeVendorBankDetailsCard'),
@@ -924,6 +1154,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
+          if (_isLoadingVendor)
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Center(
+                child: SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: ZippyTheme.primaryGreen),
+                ),
+              ),
+            ),
           if (_vendorNotFound) ...[
             const SizedBox(height: 6),
             Container(
@@ -952,6 +1193,417 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  void _openQrScannerModal() {
+    HapticFeedback.selectionClick();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: ZippyTheme.surfaceElevated,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 18),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.qr_code_scanner_rounded, color: ZippyTheme.primaryGreen, size: 22),
+                  SizedBox(width: 8),
+                  Text(
+                    'Scan Zippy Countertop QR',
+                    style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Point camera at countertop acrylic stand, bill sticker, or till QR',
+                style: TextStyle(color: Colors.white60, fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+
+              // Viewfinder simulation with laser line
+              Container(
+                width: 220,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: ZippyTheme.primaryGreen, width: 2),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const Icon(Icons.qr_code_2_rounded, size: 120, color: Colors.white12),
+                    Container(
+                      width: 190,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        color: ZippyTheme.primaryGreen,
+                        boxShadow: [
+                          BoxShadow(
+                            color: ZippyTheme.primaryGreen.withValues(alpha: 0.8),
+                            blurRadius: 8,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              const Text(
+                'DETECTED IN VIEWFINDER:',
+                style: TextStyle(color: Color(0xFF64748B), fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.0),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  key: const Key('scanSimulateButton_4523'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ZippyTheme.primaryGreen,
+                    foregroundColor: Colors.black,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () {
+                    HapticFeedback.mediumImpact();
+                    Navigator.pop(ctx);
+                    _connectMerchantByCode('4523');
+                  },
+                  icon: const Icon(Icons.check_circle_rounded, size: 18),
+                  label: const Text(
+                    "Siya's Tuck Shop (#4523) • Stand QR",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  key: const Key('closeQrScannerModalButton'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white70,
+                    side: BorderSide(color: ZippyTheme.border),
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Cancel Scan', style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _openNearbyRadarModal() {
+    HapticFeedback.selectionClick();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: ZippyTheme.surfaceElevated,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 18),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.radar_rounded, color: Color(0xFF38BDF8), size: 22),
+                  SizedBox(width: 8),
+                  Text(
+                    'Nearby Zippy Merchants',
+                    style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Ambient PayShap & Bluetooth radar detecting merchants within 15m',
+                style: TextStyle(color: Colors.white60, fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 18),
+
+              _buildNearbyMerchantTile(
+                ctx: ctx,
+                keyStr: 'nearbyConnectButton_4523',
+                tillNumber: '4523',
+                name: "Siya's Tuck Shop & Spaza",
+                distance: '3m away',
+                signalLabel: 'Strong',
+                signalColor: ZippyTheme.primaryGreen,
+              ),
+              const SizedBox(height: 8),
+              _buildNearbyMerchantTile(
+                ctx: ctx,
+                keyStr: 'nearbyConnectButton_1082',
+                tillNumber: '1082',
+                name: "Mama Thembi's Vetkoek",
+                distance: '8m away',
+                signalLabel: 'Good',
+                signalColor: const Color(0xFFFBBF24),
+              ),
+              const SizedBox(height: 8),
+              _buildNearbyMerchantTile(
+                ctx: ctx,
+                keyStr: 'nearbyConnectButton_8831',
+                tillNumber: '8831',
+                name: "Sipho's Butchery",
+                distance: '15m away',
+                signalLabel: 'Fair',
+                signalColor: Colors.white54,
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  key: const Key('closeNearbyRadarModalButton'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white70,
+                    side: BorderSide(color: ZippyTheme.border),
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Close Radar', style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildNearbyMerchantTile({
+    required BuildContext ctx,
+    required String keyStr,
+    required String tillNumber,
+    required String name,
+    required String distance,
+    required String signalLabel,
+    required Color signalColor,
+  }) {
+    return InkWell(
+      key: Key(keyStr),
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        Navigator.pop(ctx);
+        _connectMerchantByCode(tillNumber);
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 48),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: ZippyTheme.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 34,
+              height: 34,
+              decoration: BoxDecoration(
+                color: signalColor.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.storefront_rounded, color: signalColor, size: 18),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    '$distance • Signal: $signalLabel • #$tillNumber',
+                    style: TextStyle(color: signalColor, fontSize: 11, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: ZippyTheme.primaryGreen.withValues(alpha: 0.4)),
+              ),
+              child: const Text(
+                'Connect',
+                style: TextStyle(
+                  color: ZippyTheme.primaryGreen,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _openNfcTapModal() {
+    HapticFeedback.selectionClick();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: ZippyTheme.surfaceElevated,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 18),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.contactless_rounded, color: Color(0xFFA78BFA), size: 24),
+                  SizedBox(width: 8),
+                  Text(
+                    'Tap Merchant Terminal',
+                    style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Hold top of phone against merchant NFC sticker, countertop tag, or phone',
+                style: TextStyle(color: Colors.white60, fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+
+              Container(
+                width: 140,
+                height: 140,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFA78BFA).withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: const Color(0xFFA78BFA).withValues(alpha: 0.4), width: 2),
+                ),
+                child: Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFA78BFA).withValues(alpha: 0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.contactless_rounded,
+                      size: 48,
+                      color: Color(0xFFA78BFA),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  key: const Key('nfcTapSimulateButton_4523'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFA78BFA),
+                    foregroundColor: Colors.black,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.pop(ctx);
+                    _connectMerchantByCode('4523');
+                  },
+                  icon: const Icon(Icons.nfc_rounded, size: 18),
+                  label: const Text(
+                    "Simulate Tap on Siya's Tuck Shop (#4523)",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  key: const Key('closeNfcModalButton'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white70,
+                    side: BorderSide(color: ZippyTheme.border),
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Cancel NFC', style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _connectMerchantByCode(String code) {
+    _merchantZippyController.text = code;
+    _lookupMerchant(code);
   }
 
   Widget _buildQuickVendorCard({

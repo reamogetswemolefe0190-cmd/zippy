@@ -766,6 +766,158 @@ void main() {
     expect(find.text('9911'), findsOneWidget);
   });
 
+  testWidgets('Customer Mode: Ambient physical discovery via Scan Zippy modal', (WidgetTester tester) async {
+    configurePhoneDimensions(tester);
+    await tester.pumpWidget(const ZippyApp());
+    await tester.pumpAndSettle();
+
+    // Verify ambient Scan button has min 48px touch target
+    final scanBtn = find.byKey(const Key('connectScanZippy'));
+    expect(scanBtn, findsOneWidget);
+    expect(tester.getSize(scanBtn).height, greaterThanOrEqualTo(48.0));
+
+    // Open Scan modal
+    await tester.tap(scanBtn);
+    await tester.pumpAndSettle();
+
+    // Verify viewfinder and simulation trigger
+    expect(find.text('Scan Zippy Countertop QR'), findsOneWidget);
+    final simulateScan = find.byKey(const Key('scanSimulateButton_4523'));
+    expect(simulateScan, findsOneWidget);
+    expect(tester.getSize(simulateScan).height, greaterThanOrEqualTo(48.0));
+
+    // Simulate scanning vendor #4523 stand
+    await tester.tap(simulateScan);
+    await tester.pumpAndSettle();
+
+    // Verify merchant connected
+    expect(find.text("Siya's Tuck Shop & Spaza"), findsOneWidget);
+    expect(find.byKey(const Key('homeVendorBankDetailsCard')), findsOneWidget);
+
+    // Test Clear / Change button
+    final changeBtn = find.byKey(const Key('clearConnectedVendorButton'));
+    expect(changeBtn, findsOneWidget);
+    expect(tester.getSize(changeBtn).height, greaterThanOrEqualTo(48.0));
+    await tester.tap(changeBtn);
+    await tester.pumpAndSettle();
+
+    // Should return to ambient connection mode
+    expect(find.byKey(const Key('connectScanZippy')), findsOneWidget);
+  });
+
+  testWidgets('Customer Mode: Ambient proximity discovery via Nearby Merchants radar', (WidgetTester tester) async {
+    configurePhoneDimensions(tester);
+    await tester.pumpWidget(const ZippyApp());
+    await tester.pumpAndSettle();
+
+    // Verify ambient Nearby button has min 48px touch target
+    final nearbyBtn = find.byKey(const Key('connectNearbyMerchant'));
+    expect(nearbyBtn, findsOneWidget);
+    expect(tester.getSize(nearbyBtn).height, greaterThanOrEqualTo(48.0));
+
+    // Open Nearby radar modal
+    await tester.tap(nearbyBtn);
+    await tester.pumpAndSettle();
+
+    // Verify radar sheet and proximity list
+    expect(find.text('Nearby Zippy Merchants'), findsOneWidget);
+    expect(find.textContaining('within 15m'), findsOneWidget);
+
+    final vendorCard4523 = find.byKey(const Key('nearbyConnectButton_4523'));
+    expect(vendorCard4523, findsOneWidget);
+    expect(tester.getSize(vendorCard4523).height, greaterThanOrEqualTo(48.0));
+    expect(find.textContaining('3m away'), findsOneWidget);
+
+    // Connect to nearby merchant #4523
+    await tester.tap(vendorCard4523);
+    await tester.pumpAndSettle();
+
+    // Verify merchant connected
+    expect(find.text("Siya's Tuck Shop & Spaza"), findsOneWidget);
+    expect(find.byKey(const Key('homeVendorBankDetailsCard')), findsOneWidget);
+  });
+
+  testWidgets('Customer Mode: Ambient Tap-to-Pay pairing via NFC Tap modal', (WidgetTester tester) async {
+    configurePhoneDimensions(tester);
+    await tester.pumpWidget(const ZippyApp());
+    await tester.pumpAndSettle();
+
+    // Verify ambient Tap button has min 48px touch target
+    final tapBtn = find.byKey(const Key('connectNfcTap'));
+    expect(tapBtn, findsOneWidget);
+    expect(tester.getSize(tapBtn).height, greaterThanOrEqualTo(48.0));
+
+    // Open NFC tap modal
+    await tester.tap(tapBtn);
+    await tester.pumpAndSettle();
+
+    // Verify contactless simulation
+    expect(find.text('Tap Merchant Terminal'), findsOneWidget);
+    final simulateTap = find.byKey(const Key('nfcTapSimulateButton_4523'));
+    expect(simulateTap, findsOneWidget);
+    expect(tester.getSize(simulateTap).height, greaterThanOrEqualTo(48.0));
+
+    // Tap to pair
+    await tester.tap(simulateTap);
+    await tester.pumpAndSettle();
+
+    // Verify merchant connected
+    expect(find.text("Siya's Tuck Shop & Spaza"), findsOneWidget);
+    expect(find.byKey(const Key('homeVendorBankDetailsCard')), findsOneWidget);
+  });
+
+  testWidgets('Merchant Hub Triad: Accept (radar beacon) and Identify (audio chime)', (WidgetTester tester) async {
+    configurePhoneDimensions(tester);
+    ZippyPaymentService.setActiveMerchant('4523');
+    await tester.pumpWidget(const ZippyApp());
+    await tester.pumpAndSettle();
+
+    // Switch to Merchant Hub
+    await tester.tap(find.byKey(const ValueKey('roleSwitcherButton')));
+    await tester.pumpAndSettle();
+
+    // Pillar 1: ACCEPT - Verify Proximity Beacon is broadcasting
+    expect(find.byKey(const Key('merchantProximityBeaconStatus')), findsOneWidget);
+    expect(find.textContaining('Ambient Radar: Active'), findsOneWidget);
+
+    // Pillar 3: IDENTIFY - Verify Audio Chime toggle button
+    final chimeBtn = find.byKey(const Key('testChimeButton'));
+    expect(chimeBtn, findsOneWidget);
+    expect(tester.getSize(chimeBtn).height, greaterThanOrEqualTo(48.0));
+
+    await tester.tap(chimeBtn);
+    await tester.pump();
+    expect(find.textContaining('Countertop Audio Chime: Ready'), findsOneWidget);
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('Merchant Hub Triad: Reconcile (daily ledger & CSV export)', (WidgetTester tester) async {
+    configurePhoneDimensions(tester);
+    ZippyPaymentService.setActiveMerchant('4523');
+    await tester.pumpWidget(const ZippyApp());
+    await tester.pumpAndSettle();
+
+    // Switch to Merchant Hub
+    await tester.tap(find.byKey(const ValueKey('roleSwitcherButton')));
+    await tester.pumpAndSettle();
+
+    // Pillar 2: RECONCILE - Verify Auto-Reconciled Ledger & CSV Export
+    expect(find.byKey(const Key('merchantReconciliationCard')), findsOneWidget);
+    expect(find.text('DAILY RECONCILIATION'), findsOneWidget);
+    expect(find.text('Auto-Reconciled'), findsOneWidget);
+    expect(find.textContaining('Matched against SARB PayShap'), findsOneWidget);
+
+    final exportBtn = find.byKey(const Key('exportReconciliationButton'));
+    expect(exportBtn, findsOneWidget);
+    expect(tester.getSize(exportBtn).height, greaterThanOrEqualTo(48.0));
+
+    // Tap Export CSV
+    await tester.tap(exportBtn);
+    await tester.pump();
+    expect(find.textContaining('Daily settlement report exported'), findsOneWidget);
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('ZippyLogo renders custom vector Bilateral Split paths cleanly', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
