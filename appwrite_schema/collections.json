@@ -1,0 +1,52 @@
+{
+  "$schema": "https://appwrite.io/schemas/database.json",
+  "name": "zippy_main",
+  "collections": [
+    {
+      "$id": "vendors",
+      "name": "Vendors",
+      "attributes": [
+        { "key": "zippyNumber", "type": "string", "size": 4, "required": true },
+        { "key": "name", "type": "string", "size": 128, "required": true },
+        { "key": "category", "type": "string", "size": 64, "required": true },
+        { "key": "ownerName", "type": "string", "size": 128, "required": true },
+        { "key": "phoneNumber", "type": "string", "size": 32, "required": true },
+        { "key": "bankName", "type": "string", "size": 64, "required": true },
+        { "key": "accountNumber", "type": "string", "size": 32, "required": true }
+      ],
+      "indexes": [
+        { "key": "zippyNumber_unique", "type": "unique", "attributes": ["zippyNumber"] }
+      ]
+    },
+    {
+      "$id": "transactions",
+      "name": "Transactions",
+      "attributes": [
+        { "key": "type", "type": "string", "size": 32, "required": true },
+        { "key": "status", "type": "string", "size": 32, "required": true },
+        { "key": "authCode", "type": "string", "size": 64, "required": true },
+        { "key": "grossAmount", "type": "double", "required": true },
+        { "key": "zippyFee", "type": "double", "required": true },
+        { "key": "netPayout", "type": "double", "required": true },
+        { "key": "idempotencyKey", "type": "string", "size": 128, "required": true },
+        { "key": "createdAt", "type": "string", "size": 64, "required": false }
+      ],
+      "indexes": [
+        { "key": "idempotencyKey_unique", "type": "unique", "attributes": ["idempotencyKey"] }
+      ]
+    },
+    {
+      "$id": "splits",
+      "name": "BillSplits",
+      "attributes": [
+        { "key": "title", "type": "string", "size": 128, "required": true },
+        { "key": "totalAmount", "type": "double", "required": true },
+        { "key": "hostId", "type": "string", "size": 64, "required": true },
+        { "key": "hostName", "type": "string", "size": 128, "required": false },
+        { "key": "status", "type": "string", "size": 32, "required": true },
+        { "key": "participantsJson", "type": "string", "size": 4096, "required": true },
+        { "key": "createdAt", "type": "string", "size": 64, "required": false }
+      ]
+    }
+  ]
+}

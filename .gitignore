@@ -1,0 +1,33 @@
+# Antigravity & Agent artifacts
+.agents/
+
+# Flutter & Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+**/build/
+**/coverage/
+build/
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Python temporary files
+__pycache__/
+*.py[cod]
+
+# Local Environment & Secrets
+.env
+.env.local
+*.pem
+*.key

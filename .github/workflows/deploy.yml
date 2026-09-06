@@ -1,0 +1,64 @@
+name: Build, Test & Deploy Zippy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Dependencies
+        working-directory: zippy_app
+        run: flutter pub get
+
+      - name: Run Static Analysis
+        working-directory: zippy_app
+        run: dart analyze --fatal-infos
+
+      - name: Run Automated Tests
+        working-directory: zippy_app
+        run: flutter test
+
+      - name: Build Flutter Web
+        working-directory: zippy_app
+        run: flutter build web --release --base-href "./"
+
+      - name: Copy Assets & Marketing Hub to Build Output
+        run: |
+          cp zippy_logo.png zippy_app/build/web/ || true
+          cp zippy_logo.svg zippy_app/build/web/ || true
+          cp zippy_logo_transparent.png zippy_app/build/web/ || true
+          cp zippy_logo_for_light_bg.png zippy_app/build/web/ || true
+          cp zippy_app_icon.png zippy_app/build/web/ || true
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: zippy_app/build/web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

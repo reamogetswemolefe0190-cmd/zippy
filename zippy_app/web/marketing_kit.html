@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zippy — Official Marketing & Merchant Growth Kit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #080D18;
+      color: #F8FAFC;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printable-area, #printable-area * {
+        visibility: visible;
+      }
+      #printable-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: white !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-black">
+
+  <!-- Top Navigation & Brand Header -->
+  <header class="border-b border-white/10 bg-[#080D18]/90 backdrop-blur-md sticky top-0 z-50 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="http://localhost:8080" class="flex items-center gap-3 group">
+          <img src="/zippy_logo.png" alt="Zippy Logo" class="w-9 h-9 rounded-xl shadow-md group-hover:scale-105 transition-transform" />
+          <div>
+            <span class="font-extrabold text-lg text-white tracking-tight">zippy</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono ml-2">Marketing Hub</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="http://localhost:8080/logo_download.html" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 rounded-xl hover:bg-white/5 transition flex items-center gap-1.5">
+          <span>🎨</span> Brand Assets
+        </a>
+        <a href="http://localhost:8080" class="text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 px-4 py-2 rounded-xl transition shadow-lg shadow-emerald-500/20 flex items-center gap-1.5">
+          <span>🚀</span> Open App
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-16 px-4 sm:px-6 lg:px-8 border-b border-white/5 overflow-hidden no-print">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(22,199,132,0.15),rgba(255,255,255,0))]"></div>
+    
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-6">
+        <span>⚡</span> Growth & Acquisition Suite
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-4">
+        Everything you need to <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">acquire merchants & users</span>
+      </h1>
+      <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+        Print-ready countertop POS displays, high-converting social ad creatives, merchant pitch one-pagers, and copy templates tailored for South Africa.
+      </p>
+
+      <!-- Quick Nav Pills -->
+      <div class="flex flex-wrap items-center justify-center gap-2 font-medium text-xs sm:text-sm">
+        <a href="#pos-stand" class="px-4 py-2 rounded-xl bg-slate-900/80 border border-white/10 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition">
+          🏪 Countertop POS Stands
+        </a>
+        <a href="#social-ads" class="px-4 py-2 rounded-xl bg-slate-900/80 border border-white/10 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition">
+          📱 Social Ad Creatives
+        </a>
+        <a href="#pitch-sheet" class="px-4 py-2 rounded-xl bg-slate-900/80 border border-white/10 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition">
+          📄 Merchant Pitch Sheet
+        </a>
+        <a href="#copy-kit" class="px-4 py-2 rounded-xl bg-slate-900/80 border border-white/10 hover:border-emerald-500/40 text-slate-300 hover:text-emerald-400 transition">
+          💬 Copywriting & WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20 flex-grow">
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: PRINTABLE COUNTERTOP POS STAND -->
+    <!-- ========================================== -->
+    <section id="pos-stand" class="scroll-mt-24">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 no-print">
+        <div>
+          <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1 font-mono">01 // Storefront Signage</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Countertop Merchant POS Display</h2>
+          <p class="text-slate-400 text-sm mt-1">Printable A5 tent card for Spaza shops, tuck shops, food trucks, and retail counters.</p>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 bg-slate-900 border border-white/10 rounded-xl px-3 py-2">
+            <span class="text-xs text-slate-400 font-mono">Till #:</span>
+            <input id="tillInput" type="text" value="4523" maxlength="6" class="w-16 bg-black/50 border border-emerald-500/30 rounded-lg px-2 py-1 text-emerald-400 font-mono font-bold text-center text-sm focus:outline-none focus:border-emerald-400" oninput="updateTillNumber(this.value)" />
+          </div>
+
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+            <span>🖨️</span> Print POS Stand
+          </button>
+        </div>
+      </div>
+
+      <!-- POS Stand Preview Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Live Stand Visual Preview (Dark Stand) -->
+        <div class="lg:col-span-6 bg-slate-900/60 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden shadow-2xl">
+          <div class="text-xs text-slate-400 font-mono mb-4 uppercase tracking-wider">Acrylic Stand Preview (Dark Aesthetic)</div>
+
+          <!-- Stand Card (The physical card) -->
+          <div class="w-full max-w-sm bg-[#080D18] border-2 border-emerald-500/40 rounded-3xl p-7 text-center shadow-2xl relative overflow-hidden group">
+            
+            <!-- Top Tag -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+              <div class="flex items-center gap-2">
+                <img src="/zippy_logo.png" alt="Zippy" class="w-8 h-8 rounded-lg" />
+                <span class="font-extrabold text-white text-lg tracking-tight">zippy</span>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                Official Pay Point
+              </span>
+            </div>
+
+            <!-- Call to action -->
+            <div class="text-xs text-slate-400 font-medium uppercase tracking-wider mb-1">Pay Instantly With Any SA Bank</div>
+            <h3 class="text-2xl font-black text-white tracking-tight mb-4">SCAN OR ENTER TILL</h3>
+
+            <!-- QR Code Box -->
+            <div class="bg-white p-4 rounded-2xl inline-block shadow-xl mb-4 relative">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://zippy.co.za/pay/4523" alt="Merchant QR" id="previewQrImg" class="w-36 h-36 rounded" />
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="w-9 h-9 rounded-lg bg-[#080D18] p-1 shadow-lg border border-emerald-500/50">
+                  <img src="/zippy_logo.png" alt="Z" class="w-full h-full rounded" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Till Number Badge -->
+            <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-3 mb-5">
+              <div class="text-[11px] text-slate-400 font-mono uppercase tracking-widest mb-0.5">Zippy Till Number</div>
+              <div id="displayTill" class="text-3xl font-extrabold text-emerald-400 font-mono tracking-widest">#4523</div>
+            </div>
+
+            <!-- Supported Rails Badges -->
+            <div class="text-[10px] text-slate-400 font-medium uppercase tracking-wider mb-2">Supported Payment Rails</div>
+            <div class="flex flex-wrap items-center justify-center gap-1.5 text-[9px] font-mono text-slate-300">
+              <span class="px-2 py-1 rounded bg-slate-800/80 border border-white/5">Capitec Pay</span>
+              <span class="px-2 py-1 rounded bg-slate-800/80 border border-white/5">PayShap</span>
+              <span class="px-2 py-1 rounded bg-slate-800/80 border border-white/5">FNB / Ozow</span>
+              <span class="px-2 py-1 rounded bg-slate-800/80 border border-white/5">Standard Bank</span>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-center gap-1.5 text-[10px] text-emerald-400/80 font-mono">
+              <span>📶</span> Reverse-Billed • Low Data Friendly
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Printable High-Contrast Stand (For regular laser printers / paper) -->
+        <div id="printable-area" class="lg:col-span-6 bg-white text-slate-950 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-2xl border border-slate-200">
+          <div class="text-xs text-slate-500 font-mono mb-4 uppercase tracking-wider no-print">Clean Print Version (Ink-Friendly)</div>
+
+          <div class="w-full max-w-sm border-4 border-black rounded-2xl p-6 text-center">
+            
+            <div class="flex items-center justify-between border-b-2 border-black pb-3 mb-4">
+              <div class="flex items-center gap-2">
+                <img src="/zippy_logo_for_light_bg.png" alt="Zippy" class="w-8 h-8" />
+                <span class="font-black text-2xl tracking-tight text-black">zippy</span>
+              </div>
+              <span class="text-xs font-black tracking-wider uppercase border border-black px-2 py-0.5 rounded">
+                PAY POINT
+              </span>
+            </div>
+
+            <div class="text-xs font-bold uppercase tracking-widest text-slate-600 mb-1">Pay with your banking app</div>
+            <div class="text-2xl font-black tracking-tight mb-4">SCAN OR ENTER TILL</div>
+
+            <div class="border-2 border-black p-3 rounded-xl inline-block mb-4">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://zippy.co.za/pay/4523" alt="Merchant QR" id="printQrImg" class="w-36 h-36" />
+            </div>
+
+            <div class="border-2 border-black rounded-xl p-3 mb-4 bg-slate-50">
+              <div class="text-xs font-black tracking-widest uppercase text-slate-600 mb-0.5">TILL NUMBER</div>
+              <div id="printDisplayTill" class="text-4xl font-black font-mono tracking-widest">#4523</div>
+            </div>
+
+            <div class="text-[11px] font-bold text-slate-700">
+              Capitec • PayShap • FNB • Standard Bank • Nedbank • Absa
+            </div>
+            <div class="text-[10px] text-slate-500 mt-1 font-mono">
+              Fast, secure payment. No banking app card fees.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: SOCIAL MEDIA AD CREATIVES -->
+    <!-- ========================================== -->
+    <section id="social-ads" class="scroll-mt-24">
+      <div class="mb-8 no-print">
+        <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1 font-mono">02 // Digital Campaigns</div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Social Media Ad Creatives</h2>
+        <p class="text-slate-400 text-sm mt-1">High-converting visual concepts for Instagram, Facebook, TikTok, and Twitter/X.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- AD 1: The Split Fare / Restaurant Scenario -->
+        <div class="bg-gradient-to-br from-slate-900 to-[#0A101D] border border-white/10 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden shadow-xl hover:border-violet-500/40 transition group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl group-hover:bg-violet-500/20 transition"></div>
+          
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-[11px] font-mono font-semibold mb-4">
+              <span>👥</span> Consumer // Bill Split
+            </div>
+
+            <h3 class="text-xl font-bold text-white leading-snug mb-3">
+              "Great dinner. Awkward maths. Never again."
+            </h3>
+
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+              When the waiter brings one bill for six people, don't pass the paper around. Type the total, choose your friends, and Zippy splits the portions in 1 tap.
+            </p>
+
+            <!-- Mock UI card -->
+            <div class="bg-[#080D18] border border-white/10 rounded-2xl p-3.5 mb-4 shadow-lg space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-300 font-medium">Dinner at RocoMamas 🍔</span>
+                <span class="text-violet-400 font-mono font-bold">R640.00</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-violet-400 h-1.5 rounded-full w-3/4"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400">
+                <span>3 of 4 settled</span>
+                <span class="text-emerald-400 font-semibold font-mono">R160/person</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-slate-500">Instagram 1:1 Feed</span>
+            <button onclick="copyAdText(1)" class="text-xs font-semibold text-violet-400 hover:text-violet-300 flex items-center gap-1">
+              <span>📋</span> Copy Caption
+            </button>
+          </div>
+        </div>
+
+        <!-- AD 2: Merchant POS / Spaza Shop -->
+        <div class="bg-gradient-to-br from-slate-900 to-[#0A101D] border border-white/10 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden shadow-xl hover:border-emerald-500/40 transition group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition"></div>
+          
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono font-semibold mb-4">
+              <span>🏪</span> Merchant Acquisition
+            </div>
+
+            <h3 class="text-xl font-bold text-white leading-snug mb-3">
+              "Stop losing 3.5% on expensive card machines."
+            </h3>
+
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+              Turn your smartphone into a verified South African payment terminal in 60 seconds. R0 rental fees, 1.5% capped transactions, instant PayShap bank settlements.
+            </p>
+
+            <!-- Mock Metric Badge -->
+            <div class="grid grid-cols-2 gap-2 mb-4">
+              <div class="bg-[#080D18] border border-white/5 rounded-xl p-2.5 text-center">
+                <div class="text-[10px] text-slate-400 uppercase font-mono">Hardware Cost</div>
+                <div class="text-emerald-400 font-bold text-base mt-0.5">R0.00</div>
+              </div>
+              <div class="bg-[#080D18] border border-white/5 rounded-xl p-2.5 text-center">
+                <div class="text-[10px] text-slate-400 uppercase font-mono">Setup Time</div>
+                <div class="text-white font-bold text-base mt-0.5">60 Sec</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-slate-500">LinkedIn & Meta Ads</span>
+            <button onclick="copyAdText(2)" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
+              <span>📋</span> Copy Caption
+            </button>
+          </div>
+        </div>
+
+        <!-- AD 3: Commute / Split Taxi Fare -->
+        <div class="bg-gradient-to-br from-slate-900 to-[#0A101D] border border-white/10 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden shadow-xl hover:border-cyan-500/40 transition group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition"></div>
+          
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-mono font-semibold mb-4">
+              <span>🚕</span> Commute // Taxi & Rides
+            </div>
+
+            <h3 class="text-xl font-bold text-white leading-snug mb-3">
+              "Paid for the whole ride? Get refunded before your stop."
+            </h3>
+
+            <p class="text-slate-400 text-xs leading-relaxed mb-6">
+              Covering the group ride, taxi fare, or braai meat? Send an instant Zippy ping. No banking account numbers to type, no 24-hour delays.
+            </p>
+
+            <div class="bg-[#080D18] border border-white/10 rounded-2xl p-3.5 mb-4 shadow-lg flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold text-lg">
+                ⚡
+              </div>
+              <div>
+                <div class="text-xs text-white font-semibold">Instant PayShap Settle</div>
+                <div class="text-[11px] text-slate-400">Zero wait, directly to your bank</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-slate-500">TikTok / Reels / Shorts</span>
+            <button onclick="copyAdText(3)" class="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+              <span>📋</span> Copy Caption
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 3: MERCHANT SALES ONE-PAGER -->
+    <!-- ========================================== -->
+    <section id="pitch-sheet" class="scroll-mt-24">
+      <div class="mb-8 no-print">
+        <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1 font-mono">03 // Sales & B2B Pitch</div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Merchant Comparison One-Pager</h2>
+        <p class="text-slate-400 text-sm mt-1">Printable pitch sheet to hand to local shopkeepers, market vendors, and restaurant managers.</p>
+      </div>
+
+      <div class="bg-slate-900/60 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
+        <div class="max-w-4xl mx-auto space-y-8">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+            <div>
+              <span class="text-xs font-mono text-emerald-400 uppercase tracking-widest font-bold">Why Merchants Switch</span>
+              <h3 class="text-2xl sm:text-3xl font-black text-white mt-1">Zippy vs Traditional Card Machines</h3>
+            </div>
+            <div class="text-xs font-mono text-slate-400 bg-black/40 px-3 py-1.5 rounded-xl border border-white/5">
+              South African Market Benchmark (2026)
+            </div>
+          </div>
+
+          <!-- Comparison Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-white/10 text-slate-400 font-mono text-xs uppercase tracking-wider">
+                  <th class="py-3 px-4">Feature</th>
+                  <th class="py-3 px-4 text-slate-400">Traditional Card POS (Yoco / iKhokha / Banks)</th>
+                  <th class="py-3 px-4 text-emerald-400 bg-emerald-500/5 rounded-t-xl font-bold">Zippy Payment Till</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-slate-300">
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Hardware Device Cost</td>
+                  <td class="py-4 px-4 text-slate-400">R799 – R2,499 upfront</td>
+                  <td class="py-4 px-4 text-emerald-400 font-bold bg-emerald-500/5">R0.00 (Your existing smartphone)</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Monthly Rental / SIM Fee</td>
+                  <td class="py-4 px-4 text-slate-400">R150 – R350 / month</td>
+                  <td class="py-4 px-4 text-emerald-400 font-bold bg-emerald-500/5">R0.00 / month forever</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Transaction Fee</td>
+                  <td class="py-4 px-4 text-slate-400">2.75% – 3.5% + VAT</td>
+                  <td class="py-4 px-4 text-emerald-400 font-bold bg-emerald-500/5">1.50% (capped micro-rate)</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Payout Speed</td>
+                  <td class="py-4 px-4 text-slate-400">1 to 3 business days</td>
+                  <td class="py-4 px-4 text-emerald-400 font-bold bg-emerald-500/5">Instant via PayShap / Capitec Pay</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Customer Payment Experience</td>
+                  <td class="py-4 px-4 text-slate-400">Physical card tap / PIN entry</td>
+                  <td class="py-4 px-4 text-emerald-400 font-bold bg-emerald-500/5">Instant 4-digit till or QR scan</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-semibold text-white">Zero Data / Load-Shedding</td>
+                  <td class="py-4 px-4 text-slate-400">Offline failure if tower is down</td>
+                  <td class="py-4 px-4 text-emerald-400 font-bold bg-emerald-500/5">Offline fallback & reverse-billed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 3 Step Setup Guide -->
+          <div class="pt-6 border-t border-white/10">
+            <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 font-mono">Merchant Onboarding in 3 Steps</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-black/30 border border-white/5 rounded-2xl p-4">
+                <div class="text-emerald-400 font-mono font-bold text-lg mb-1">01. Register</div>
+                <div class="text-xs text-slate-300">Enter your business name and bank account (Capitec, FNB, etc.). Instant verification.</div>
+              </div>
+              <div class="bg-black/30 border border-white/5 rounded-2xl p-4">
+                <div class="text-emerald-400 font-mono font-bold text-lg mb-1">02. Display Till #</div>
+                <div class="text-xs text-slate-300">Receive your unique 4-digit Till Number and QR code. Print the countertop card.</div>
+              </div>
+              <div class="bg-black/30 border border-white/5 rounded-2xl p-4">
+                <div class="text-emerald-400 font-mono font-bold text-lg mb-1">03. Get Paid</div>
+                <div class="text-xs text-slate-300">Customers enter your 4 digits and pay in 4 seconds. Money lands straight in your bank.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 4: LAUNCH COPYWRITING TOOLKIT -->
+    <!-- ========================================== -->
+    <section id="copy-kit" class="scroll-mt-24">
+      <div class="mb-8 no-print">
+        <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1 font-mono">04 // Ready-To-Use Messaging</div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Copywriting & Broadcast Toolkit</h2>
+        <p class="text-slate-400 text-sm mt-1">Pre-written message scripts for WhatsApp merchant broadcasts, customer SMS, and viral social posts.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Copy Block 1: WhatsApp Broadcast for Store Customers -->
+        <div class="bg-slate-900/60 border border-white/10 rounded-3xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-semibold text-emerald-400 uppercase tracking-wider">WhatsApp Merchant Broadcast</span>
+              <span class="text-[10px] text-slate-500 font-mono">To send to loyal customers</span>
+            </div>
+            
+            <div class="bg-black/40 border border-white/5 rounded-2xl p-4 text-xs font-mono text-slate-300 leading-relaxed space-y-3" id="copy-wa">
+              <p>👋 Dumelang / Molo / Sawubona!</p>
+              <p>We are now officially accepting payments with <strong>Zippy</strong>! ⚡</p>
+              <p>No need to wait for a slow card machine or carry cash. Just enter our Zippy Till Number <strong>#4523</strong> on your phone and pay directly from Capitec, FNB, Standard Bank, or Nedbank in 4 seconds.</p>
+              <p>Try it out next time you stop by! 🏪✨</p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-white/5 flex justify-end">
+            <button onclick="copyElementText('copy-wa', this)" class="px-4 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition flex items-center gap-1.5">
+              <span>📋</span> Copy WhatsApp Script
+            </button>
+          </div>
+        </div>
+
+        <!-- Copy Block 2: Twitter/X & Social Launch Thread -->
+        <div class="bg-slate-900/60 border border-white/10 rounded-3xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-semibold text-violet-400 uppercase tracking-wider">Twitter / X Announcement Post</span>
+              <span class="text-[10px] text-slate-500 font-mono">Consumer Launch</span>
+            </div>
+            
+            <div class="bg-black/40 border border-white/5 rounded-2xl p-4 text-xs font-mono text-slate-300 leading-relaxed space-y-3" id="copy-x">
+              <p>Paying a spaza shop shouldn't feel like 2005, and splitting dinner shouldn't require an Excel spreadsheet. 🇿🇦</p>
+              <p>Meet Zippy: Pay any vendor using their 4-digit code in 4 seconds, or split any bill with your squad in 1-tap via PayShap & Capitec Pay.</p>
+              <p>Fast. Clean. Built for South Africa. ⚡ Try it: zippy.co.za #FintechSA #PayShap</p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-white/5 flex justify-end">
+            <button onclick="copyElementText('copy-x', this)" class="px-4 py-2 rounded-xl bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 border border-violet-500/30 text-xs font-bold transition flex items-center gap-1.5">
+              <span>📋</span> Copy Social Post
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-8 px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 font-mono no-print">
+    <div>Zippy South Africa • High-Velocity Payments & Bill Splitting</div>
+    <div class="mt-1 text-slate-600">Built with South African payment ecosystem realities: Capitec Pay, PayShap, Ozow, and zero-rated networks.</div>
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    function updateTillNumber(val) {
+      const cleanVal = val.trim() || '4523';
+      document.getElementById('displayTill').innerText = '#' + cleanVal;
+      document.getElementById('printDisplayTill').innerText = '#' + cleanVal;
+      
+      const newQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent('https://zippy.co.za/pay/' + cleanVal);
+      document.getElementById('previewQrImg').src = newQrUrl;
+      document.getElementById('printQrImg').src = newQrUrl;
+    }
+
+    function copyAdText(idx) {
+      let text = '';
+      if (idx === 1) {
+        text = "Great dinner. Awkward maths. Never again.\\nWhen the bill arrives for 6 people, don't pass around paper napkins. Type the total, choose your friends, and Zippy splits the portions in 1 tap via PayShap!\\n\\nTry Zippy: zippy.co.za ⚡ #SplitBills #ZippySA";
+      } else if (idx === 2) {
+        text = "Tired of losing 3.5% + device rentals on bulky card machines?\\nTurn your phone into a verified Zippy Till in 60 seconds. R0 monthly hardware fee, 1.5% micro-fee, instant PayShap settlement straight into your bank.\\n\\nRegister your till: zippy.co.za/merchant 🏪 #SouthAfricaBusiness #Fintech";
+      } else if (idx === 3) {
+        text = "Paid for the Uber or taxi fare? Don't wait 3 weeks to get paid back.\\nSend a 1-tap Zippy payback ping to your squad. Instant bank transfer via Capitec Pay & PayShap. 🚕⚡ #ZippySA";
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Ad caption copied to clipboard!");
+      });
+    }
+
+    function copyElementText(elId, btn) {
+      const el = document.getElementById(elId);
+      navigator.clipboard.writeText(el.innerText).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<span>✅</span> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = orig;
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
