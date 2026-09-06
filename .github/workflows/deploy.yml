@@ -37,15 +37,19 @@ jobs:
 
       - name: Build Flutter Web
         working-directory: zippy_app
-        run: flutter build web --release --base-href "./"
+        run: flutter build web --release --base-href "/zippy/"
 
-      - name: Copy Extra Web Pages & Assets
+      - name: Copy Assets & Extra Web Pages
         run: |
           cp zippy_logo.png zippy_app/build/web/ || true
           cp zippy_logo.svg zippy_app/build/web/ || true
           cp zippy_logo_transparent.png zippy_app/build/web/ || true
           cp zippy_logo_for_light_bg.png zippy_app/build/web/ || true
           cp zippy_app_icon.png zippy_app/build/web/ || true
+          cp zippy_app/web/marketing_kit.html zippy_app/build/web/ || true
+          cp zippy_app/web/logo_download.html zippy_app/build/web/ || true
+          cp zippy_app/web/logo_showcase.html zippy_app/build/web/ || true
+          touch zippy_app/build/web/.nojekyll
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
