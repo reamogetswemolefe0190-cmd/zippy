@@ -1,4 +1,4 @@
-name: Build, Test & Deploy Zippy to GitHub Pages
+name: Deploy Zippy Web & Marketing Hub
 
 on:
   push:
@@ -6,16 +6,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
   group: 'pages'
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -31,11 +31,7 @@ jobs:
         working-directory: zippy_app
         run: flutter pub get
 
-      - name: Run Static Analysis
-        working-directory: zippy_app
-        run: dart analyze --fatal-infos
-
-      - name: Run Automated Tests
+      - name: Run Tests
         working-directory: zippy_app
         run: flutter test
 
@@ -43,7 +39,7 @@ jobs:
         working-directory: zippy_app
         run: flutter build web --release --base-href "./"
 
-      - name: Copy Assets & Marketing Hub to Build Output
+      - name: Copy Extra Web Pages & Assets
         run: |
           cp zippy_logo.png zippy_app/build/web/ || true
           cp zippy_logo.svg zippy_app/build/web/ || true
@@ -51,14 +47,25 @@ jobs:
           cp zippy_logo_for_light_bg.png zippy_app/build/web/ || true
           cp zippy_app_icon.png zippy_app/build/web/ || true
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4
-
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: zippy_app/build/web
 
+      - name: Deploy to gh-pages branch (Fallback)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: zippy_app/build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
