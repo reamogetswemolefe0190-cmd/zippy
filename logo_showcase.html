@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zippy — Official Logo Design Exploration (logo-generator-skill)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: #080D18;
+      color: #F8FAFC;
+      overflow-x: hidden;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .logo-card {
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .logo-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(22, 199, 132, 0.4);
+      box-shadow: 0 20px 40px -15px rgba(22, 199, 132, 0.15);
+    }
+    .logo-preview-box {
+      background: radial-gradient(circle at 50% 50%, rgba(22, 199, 132, 0.06) 0%, rgba(15, 23, 42, 0.8) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+    }
+    .toast {
+      transform: translateY(100px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="p-6 md:p-12 min-h-screen flex flex-col justify-between">
+  <div class="max-w-7xl mx-auto w-full">
+    <!-- Header -->
+    <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-8 gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <span>⚡</span> logo-generator-skill • Phase 2 Exploration
+        </div>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white flex items-center gap-3">
+          <span>zippy</span>
+          <span class="text-emerald-400 font-light text-2xl md:text-3xl">/ Brand System</span>
+        </h1>
+        <p class="text-slate-400 mt-2 text-sm md:text-base max-w-xl">
+          Six distinct vector logo archetypes designed specifically for South Africa's fastest micro-payments and bill-splitting platform.
+        </p>
+      </div>
+
+      <!-- Quick Meta Stats -->
+      <div class="flex items-center gap-4 text-xs font-mono text-slate-400 bg-slate-900/80 px-4 py-3 rounded-xl border border-white/5">
+        <div><span class="text-emerald-400 font-semibold">Brand Color:</span> #16C784</div>
+        <div class="h-4 w-px bg-white/10"></div>
+        <div><span class="text-slate-300 font-semibold">Canvas:</span> 100x100 SVG</div>
+        <div class="h-4 w-px bg-white/10"></div>
+        <div><span class="text-slate-300 font-semibold">Grid:</span> 6 Variants</div>
+      </div>
+    </header>
+
+    <!-- 6-Logo Grid -->
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Variant 1 -->
+      <article class="logo-card p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs text-emerald-400 tracking-wider">VARIANT 01</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300">Kinetic Pulse</span>
+          </div>
+          <div class="logo-preview-box h-48 flex items-center justify-center p-8 mb-6 group cursor-pointer" onclick="copySvg('svg-01')">
+            <svg id="svg-01" viewBox="0 0 100 100" class="w-24 h-24 text-white group-hover:text-emerald-400 transition-colors" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 26H78" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+              <path d="M72 32L40 56H58L26 78" stroke="#16C784" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 78H78" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="78" cy="56" r="3.5" fill="#16C784"/>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold text-white mb-1">The Kinetic Pulse</h2>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            A bold geometric lettermark fused with a high-velocity 45° lightning conduit. Features rounded terminals and an energetic trailing spark dot representing instant cash confirmation.
+          </p>
+        </div>
+        <div class="border-t border-white/5 pt-4 flex items-center justify-between">
+          <span class="text-[11px] font-mono text-slate-500">Pattern: Line System + Spark</span>
+          <button onclick="copySvg('svg-01')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">Copy SVG</button>
+        </div>
+      </article>
+
+      <!-- Variant 2 -->
+      <article class="logo-card p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs text-emerald-400 tracking-wider">VARIANT 02</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300">Bilateral Ribbon</span>
+          </div>
+          <div class="logo-preview-box h-48 flex items-center justify-center p-8 mb-6 group cursor-pointer" onclick="copySvg('svg-02')">
+            <svg id="svg-02" viewBox="0 0 100 100" class="w-24 h-24 text-white group-hover:scale-105 transition-transform" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M26 28H66C72.6 28 78 33.4 78 40V42C78 48.6 72.6 54 66 54H50" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M74 72H34C27.4 72 22 66.6 22 60V58C22 51.4 27.4 46 34 46H50" stroke="#16C784" stroke-width="4.5" stroke-linecap="round"/>
+              <circle cx="50" cy="54" r="3.5" fill="currentColor"/>
+              <circle cx="50" cy="46" r="3.5" fill="#16C784"/>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold text-white mb-1">The Bilateral Split</h2>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Two interlocking rounded capsule ribbons representing sender and receiver in perfect balance. Seamlessly communicates both merchant payments and social bill splitting between friends.
+          </p>
+        </div>
+        <div class="border-t border-white/5 pt-4 flex items-center justify-between">
+          <span class="text-[11px] font-mono text-slate-500">Pattern: Dual Ribbon Mesh</span>
+          <button onclick="copySvg('svg-02')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">Copy SVG</button>
+        </div>
+      </article>
+
+      <!-- Variant 3 -->
+      <article class="logo-card p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs text-emerald-400 tracking-wider">VARIANT 03</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300">Modular Till Matrix</span>
+          </div>
+          <div class="logo-preview-box h-48 flex items-center justify-center p-8 mb-6 group cursor-pointer" onclick="copySvg('svg-03')">
+            <svg id="svg-03" viewBox="0 0 100 100" class="w-24 h-24 group-hover:scale-105 transition-transform" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="22" y="22" width="14" height="14" rx="4" fill="#FFFFFF"/>
+              <rect x="43" y="22" width="14" height="14" rx="4" fill="#FFFFFF"/>
+              <rect x="64" y="22" width="14" height="14" rx="4" fill="#16C784"/>
+              
+              <rect x="43" y="43" width="14" height="14" rx="4" fill="#16C784"/>
+              
+              <rect x="22" y="64" width="14" height="14" rx="4" fill="#16C784"/>
+              <rect x="43" y="64" width="14" height="14" rx="4" fill="#FFFFFF"/>
+              <rect x="64" y="64" width="14" height="14" rx="4" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold text-white mb-1">The Countertop Till</h2>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            A 3x3 rounded squircle matrix inspired by physical point-of-sale keypads. Selective subtractions craft an architectural 'Z', evoking the four-digit countertop till code.
+          </p>
+        </div>
+        <div class="border-t border-white/5 pt-4 flex items-center justify-between">
+          <span class="text-[11px] font-mono text-slate-500">Pattern: Dot Matrix / Modular</span>
+          <button onclick="copySvg('svg-03')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">Copy SVG</button>
+        </div>
+      </article>
+
+      <!-- Variant 4 -->
+      <article class="logo-card p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs text-emerald-400 tracking-wider">VARIANT 04</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300">Möbius Ribbon</span>
+          </div>
+          <div class="logo-preview-box h-48 flex items-center justify-center p-8 mb-6 group cursor-pointer" onclick="copySvg('svg-04')">
+            <svg id="svg-04" viewBox="0 0 100 100" class="w-24 h-24 text-white group-hover:text-emerald-400 transition-colors" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 28C45 28 55 72 70 72C78 72 82 66 82 56C82 46 72 40 50 50C28 60 18 54 18 44C18 34 22 28 30 28Z" 
+                    stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="50" cy="50" r="4.5" fill="#16C784"/>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold text-white mb-1">The Infinite Flow</h2>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            A single continuous closed path derived from the infinity loop, twisting through a central emerald void into a stylized letter Z. Symbolizes unceasing financial liquidity and effortless circulation.
+          </p>
+        </div>
+        <div class="border-t border-white/5 pt-4 flex items-center justify-between">
+          <span class="text-[11px] font-mono text-slate-500">Pattern: Continuous Void Loop</span>
+          <button onclick="copySvg('svg-04')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">Copy SVG</button>
+        </div>
+      </article>
+
+      <!-- Variant 5 -->
+      <article class="logo-card p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs text-emerald-400 tracking-wider">VARIANT 05</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300">Radial Lightning</span>
+          </div>
+          <div class="logo-preview-box h-48 flex items-center justify-center p-8 mb-6 group cursor-pointer" onclick="copySvg('svg-05')">
+            <svg id="svg-05" viewBox="0 0 100 100" class="w-24 h-24 group-hover:scale-105 transition-transform" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 26H76" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+              <path d="M68 34L44 54" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+              <path d="M56 46L30 68" stroke="#16C784" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M24 74H78" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="70" cy="50" r="3.5" fill="#16C784"/>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold text-white mb-1">The Staggered Beam</h2>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Rhythmic parallel vector rays with staggered lengths and precise 12px gaps. Harnesses visual tension through asymmetry, capturing the rapid pulse of South Africa's PayShap network.
+          </p>
+        </div>
+        <div class="border-t border-white/5 pt-4 flex items-center justify-between">
+          <span class="text-[11px] font-mono text-slate-500">Pattern: Asymmetric Ray System</span>
+          <button onclick="copySvg('svg-05')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">Copy SVG</button>
+        </div>
+      </article>
+
+      <!-- Variant 6 -->
+      <article class="logo-card p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs text-emerald-400 tracking-wider">VARIANT 06</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300">Negative Cut Monolith</span>
+          </div>
+          <div class="logo-preview-box h-48 flex items-center justify-center p-8 mb-6 group cursor-pointer" onclick="copySvg('svg-06')">
+            <svg id="svg-06" viewBox="0 0 100 100" class="w-24 h-24 group-hover:scale-105 transition-transform" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="14" y="14" width="72" height="72" rx="20" fill="#0F172A" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+              <path d="M34 34H66L44 52H60L34 68L39 51H27L34 34Z" fill="#16C784"/>
+            </svg>
+          </div>
+          <h2 class="text-lg font-bold text-white mb-1">The Kasi Monolith</h2>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            A solid dark squircle badge housing a sharply carved lightning monogram. Formatted specifically as an ultra-high-definition iOS/Android home screen icon and browser favicon.
+          </p>
+        </div>
+        <div class="border-t border-white/5 pt-4 flex items-center justify-between">
+          <span class="text-[11px] font-mono text-slate-500">Pattern: App Icon / Cutout</span>
+          <button onclick="copySvg('svg-06')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition">Copy SVG</button>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Scale Comparison Section -->
+    <section class="mt-16 bg-slate-900/60 border border-white/5 rounded-2xl p-8">
+      <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-400 mb-6 font-mono">
+        Multi-Scale Legibility Test (Favicon to Billboard)
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center">
+        <!-- 16px -->
+        <div class="flex flex-col items-center gap-2 p-4 bg-black/40 rounded-xl border border-white/5">
+          <span class="text-xs text-slate-500 font-mono">16x16 (Favicon)</span>
+          <div class="w-4 h-4 bg-emerald-500/20 rounded flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-3 h-3 text-emerald-400" fill="none">
+              <path d="M22 26H78L40 56H60L26 78H78" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 32px -->
+        <div class="flex flex-col items-center gap-2 p-4 bg-black/40 rounded-xl border border-white/5">
+          <span class="text-xs text-slate-500 font-mono">32x32 (App Header)</span>
+          <div class="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/30">
+            <svg viewBox="0 0 100 100" class="w-5 h-5 text-emerald-400" fill="none">
+              <path d="M22 26H78L40 56H60L26 78H78" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 64px -->
+        <div class="flex flex-col items-center gap-2 p-4 bg-black/40 rounded-xl border border-white/5">
+          <span class="text-xs text-slate-500 font-mono">64x64 (App Icon)</span>
+          <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center border border-white/10 shadow-lg">
+            <svg viewBox="0 0 100 100" class="w-10 h-10" fill="none">
+              <rect x="14" y="14" width="72" height="72" rx="16" fill="#080D18"/>
+              <path d="M34 34H66L44 52H60L34 68L39 51H27L34 34Z" fill="#16C784"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 128px -->
+        <div class="flex flex-col items-center gap-2 p-4 bg-black/40 rounded-xl border border-white/5">
+          <span class="text-xs text-slate-500 font-mono">128x128 (Counter Stand)</span>
+          <div class="w-20 h-20 bg-slate-950 rounded-2xl flex items-center justify-center border border-emerald-500/20 shadow-xl">
+            <svg viewBox="0 0 100 100" class="w-14 h-14" fill="none">
+              <path d="M22 26H78" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+              <path d="M72 32L40 56H58L26 78" stroke="#16C784" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 78H78" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-16 text-center text-xs text-slate-500 pb-8">
+      Built following <a href="https://github.com/op7418/logo-generator-skill" target="_blank" class="text-emerald-400 hover:underline">op7418/logo-generator-skill</a> design guidelines.
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast fixed bottom-8 right-8 bg-emerald-500 text-slate-950 font-semibold px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 z-50 text-sm">
+    <span>✓</span> SVG code copied to clipboard!
+  </div>
+
+  <script>
+    function copySvg(elementId) {
+      const svg = document.getElementById(elementId);
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svg);
+      navigator.clipboard.writeText(svgString).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      });
+    }
+  </script>
+</body>
+</html>
