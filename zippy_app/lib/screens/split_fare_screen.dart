@@ -48,6 +48,7 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
   late Set<String> _selectedFriendNames;
   bool _isCustomSplit = false;
   final Map<String, TextEditingController> _customControllers = {};
+  int _step = 0; // 0: Amount, 1: People & Portions, 2: Review & Send
 
   BillSplitModel? _activeSplit;
   bool _isCreating = false;
@@ -93,6 +94,7 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
     }
     if (shouldSync) {
       _activeSplit = null;
+      _step = 0;
       _recalculateCustomControllers(force: true);
     }
   }
@@ -317,22 +319,176 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Mode Subtitle
-        const Text(
-          'Split Fare ⚡',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+        // 1. Step Breadcrumbs / Progress Indicator
+        _buildStepIndicator(),
+
+        // 2. Animated Step Content
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 220),
+          switchInCurve: Curves.easeOutCubic,
+          switchOutCurve: Curves.easeInCubic,
+          child: _step == 0
+              ? KeyedSubtree(
+                  key: const ValueKey('split_step_amount'),
+                  child: _buildStep0Amount(total, friendCount, hostShare, friendsSum, equalShare),
+                )
+              : _step == 1
+                  ? KeyedSubtree(
+                      key: const ValueKey('split_step_people'),
+                      child: _buildStep1People(totalPersons, friendCount, equalShare),
+                    )
+                  : KeyedSubtree(
+                      key: const ValueKey('split_step_summary'),
+                      child: _buildStep2Summary(
+                        total,
+                        totalPersons,
+                        friendCount,
+                        hostShare,
+                        friendsSum,
+                        equalShare,
+                        feeTotal,
+                        totalRequested,
+                      ),
+                    ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStepIndicator() {
+    final steps = [
+      (title: 'Amount', number: 1),
+      (title: 'People', number: 2),
+      (title: 'Split', number: 3),
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Row(
+        children: [
+          for (int i = 0; i < steps.length; i++) ...[
+            Expanded(
+              child: InkWell(
+                key: Key('splitStepPill_$i'),
+                onTap: () {
+                  if (i == 0 || _currentTotal > 0) {
+                    HapticFeedback.selectionClick();
+                    setState(() => _step = i);
+                  }
+                },
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  constraints: const BoxConstraints(minHeight: 48),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    color: _step == i
+                        ? ZippyTheme.splitPurple.withValues(alpha: 0.18)
+                        : const Color(0xFF0F172A),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: _step == i
+                          ? ZippyTheme.splitPurple
+                          : Colors.white.withValues(alpha: 0.08),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 18,
+                        height: 18,
+                        decoration: BoxDecoration(
+                          color: _step == i
+                              ? ZippyTheme.splitPurple
+                              : (_step > i ? ZippyTheme.primaryGreen : Colors.white12),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: _step > i
+                              ? const Icon(Icons.check, size: 12, color: Colors.black)
+                              : Text(
+                                  '${steps[i].number}',
+                                  style: TextStyle(
+                                    color: _step == i ? Colors.black : Colors.white70,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        steps[i].title,
+                        style: TextStyle(
+                          color: _step == i ? Colors.white : Colors.white60,
+                          fontSize: 12,
+                          fontWeight: _step == i ? FontWeight.bold : FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            if (i < steps.length - 1)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4),
+                child: Icon(Icons.chevron_right, size: 14, color: Colors.white24),
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStep0Amount(
+    double total,
+    int friendCount,
+    double hostShare,
+    double friendsSum,
+    double equalShare,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Mode Header + Step Tag
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Split Fare ⚡',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: ZippyTheme.splitPurple.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: ZippyTheme.splitPurple.withValues(alpha: 0.3)),
+              ),
+              child: const Text(
+                'Step 1 of 3: Amount',
+                style: TextStyle(
+                  color: ZippyTheme.splitPurple,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 10),
 
-        // 1. Venue / Occasion Card (matching Recipient Card style)
+        // Optional Venue / Occasion Card
         _buildOccasionSection(),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
 
-        // 2. Hero Bill Amount Section (matching Hero Amount style)
+        // Dominant Visual Center: Hero Bill Amount
         _buildHeroBillSection(total, friendCount, hostShare, friendsSum, equalShare),
         const SizedBox(height: 12),
 
@@ -343,79 +499,43 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
         ),
         const SizedBox(height: 16),
 
-        // 3. Portion Mode Selector (Equal vs Custom)
-        _buildPortionModeSelector(totalPersons),
-        if (_isCustomSplit) ...[
-          const SizedBox(height: 12),
-          _buildCustomSummaryCard(),
-        ],
-        const SizedBox(height: 16),
-
-        // 4. Select Friends Header & List
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'SELECT FRIENDS ($friendCount of ${_availableFriends.length} selected)',
-              style: const TextStyle(
-                color: Colors.white54,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
-            ),
-            const Text(
-              '1-Tap PayShap RTP',
-              style: TextStyle(
-                color: ZippyTheme.splitPurple,
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-
-        ..._availableFriends.map((friend) => _buildFriendCard(friend, equalShare)),
-        const SizedBox(height: 14),
-
-        // 5. Grouped Fintech Fee Summary Card
-        if (friendCount > 0) ...[
-          _buildFintechSummaryCard(friendCount, friendsSum, feeTotal, totalRequested),
-          const SizedBox(height: 16),
-        ],
-
-        // 6. Visual Conclusion CTA (54px height matching Pay button) with TactileScale
+        // Continue Action Button
         TactileScale(
-          enabled: _canDispatch,
+          enabled: total > 0,
           child: SizedBox(
             width: double.infinity,
             height: 54,
             child: ElevatedButton(
-              key: const Key('dispatchSplitButton'),
+              key: const Key('splitStep1Continue'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: ZippyTheme.primaryGreen,
-                foregroundColor: Colors.black,
+                backgroundColor: ZippyTheme.splitPurple,
+                foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
                 elevation: 0,
               ),
-              onPressed: _canDispatch ? _createSplit : null,
-              child: _isCreating
-                  ? const SizedBox(
-                      width: 22,
-                      height: 22,
-                      child: CircularProgressIndicator(color: Colors.black, strokeWidth: 2.5),
-                    )
-                  : Text(
-                      'Create & Split R ${friendsSum.toStringAsFixed(0)} ⚡',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+              onPressed: total > 0
+                  ? () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _step = 1);
+                    }
+                  : null,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Continue to Friends',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  SizedBox(width: 8),
+                  Icon(Icons.arrow_forward_rounded, size: 18, color: Colors.white),
+                ],
+              ),
             ),
           ),
         ),
@@ -424,13 +544,335 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
     );
   }
 
+  Widget _buildStep1People(int totalPersons, int friendCount, double equalShare) {
+    final bool canProceed = friendCount > 0 && !_hasInvalidPortion && !_isCustomOverAllocated;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Navigation Header
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () {
+                HapticFeedback.selectionClick();
+                setState(() => _step = 0);
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                child: Row(
+                  children: [
+                    Icon(Icons.arrow_back, size: 16, color: Colors.white70),
+                    SizedBox(width: 4),
+                    Text('Amount', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: ZippyTheme.splitPurple.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: ZippyTheme.splitPurple.withValues(alpha: 0.3)),
+              ),
+              child: const Text(
+                'Step 2 of 3: People',
+                style: TextStyle(
+                  color: ZippyTheme.splitPurple,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+
+        // Prompt
+        const Text(
+          "Who's splitting the bill?",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            letterSpacing: -0.3,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Total bill: R ${_currentTotal.toStringAsFixed(2)} • $friendCount friends selected',
+          style: const TextStyle(
+            color: Color(0xFF94A3B8),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 14),
+
+        // Friend List
+        ..._availableFriends.map((friend) => _buildFriendCard(friend, equalShare)),
+        const SizedBox(height: 14),
+
+        // Portion Mode Selector (Equal vs Custom)
+        _buildPortionModeSelector(totalPersons),
+        if (_isCustomSplit) ...[
+          const SizedBox(height: 12),
+          _buildCustomSummaryCard(),
+        ],
+        const SizedBox(height: 16),
+
+        // Bottom Action Row
+        Row(
+          children: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+              ),
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                setState(() => _step = 0);
+              },
+              child: const Icon(Icons.arrow_back, color: Colors.white70, size: 20),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TactileScale(
+                enabled: canProceed,
+                child: SizedBox(
+                  height: 54,
+                  child: ElevatedButton(
+                    key: const Key('splitStep2Continue'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ZippyTheme.splitPurple,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: canProceed
+                        ? () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _step = 2);
+                          }
+                        : null,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Continue to Review',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Icon(Icons.arrow_forward_rounded, size: 18, color: Colors.white),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+
+  Widget _buildStep2Summary(
+    double total,
+    int totalPersons,
+    int friendCount,
+    double hostShare,
+    double friendsSum,
+    double equalShare,
+    double feeTotal,
+    double totalRequested,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Navigation Header
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () {
+                HapticFeedback.selectionClick();
+                setState(() => _step = 1);
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                child: Row(
+                  children: [
+                    Icon(Icons.arrow_back, size: 16, color: Colors.white70),
+                    SizedBox(width: 4),
+                    Text('People', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: ZippyTheme.primaryGreen.withValues(alpha: 0.3)),
+              ),
+              child: const Text(
+                'Step 3 of 3: Summary',
+                style: TextStyle(
+                  color: ZippyTheme.primaryGreen,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        // Dominant Hero Share per person: e.g. "R 112.50 each"
+        Center(
+          child: Column(
+            children: [
+              Text(
+                _isCustomSplit ? 'Custom Split Summary' : 'Each person pays',
+                style: const TextStyle(
+                  color: Color(0xFF94A3B8),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  const Text(
+                    'R ',
+                    style: TextStyle(
+                      color: ZippyTheme.primaryGreen,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    _isCustomSplit
+                        ? friendsSum.toStringAsFixed(2)
+                        : equalShare.toStringAsFixed(2),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 48,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -1.5,
+                    ),
+                  ),
+                  if (!_isCustomSplit) ...[
+                    const SizedBox(width: 4),
+                    const Text(
+                      ' each',
+                      style: TextStyle(
+                        color: Color(0xFF94A3B8),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Host pays R ${hostShare.toStringAsFixed(2)} • $friendCount friends pay R ${friendsSum.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Fintech Summary Breakdown Card
+        _buildFintechSummaryCard(friendCount, friendsSum, feeTotal, totalRequested),
+        const SizedBox(height: 18),
+
+        // Action Row: Back + Concluding Dispatch Split CTA
+        Row(
+          children: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+              ),
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                setState(() => _step = 1);
+              },
+              child: const Icon(Icons.arrow_back, color: Colors.white70, size: 20),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TactileScale(
+                enabled: _canDispatch,
+                child: SizedBox(
+                  height: 54,
+                  child: ElevatedButton(
+                    key: const Key('dispatchSplitButton'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ZippyTheme.primaryGreen,
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: _canDispatch ? _createSplit : null,
+                    child: _isCreating
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(color: Colors.black, strokeWidth: 2.5),
+                          )
+                        : Text(
+                            'Send split request (R ${friendsSum.toStringAsFixed(0)}) ⚡',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+
   Widget _buildOccasionSection() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: ZippyTheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: ZippyTheme.border),
+        color: const Color(0xFF0F172A),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -438,19 +880,19 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
           Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: 32,
+                height: 32,
                 decoration: BoxDecoration(
                   color: ZippyTheme.splitPurple.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.group_outlined,
                   color: ZippyTheme.splitPurple,
-                  size: 20,
+                  size: 17,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -458,8 +900,8 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
                     const Text(
                       'Occasion / Group Title',
                       style: TextStyle(
-                        color: Colors.white54,
-                        fontSize: 11,
+                        color: Color(0xFF94A3B8),
+                        fontSize: 10,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -469,14 +911,14 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 13,
                       ),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                         hintText: 'e.g. Dinner at RocoMamas',
-                        hintStyle: TextStyle(color: Colors.white24, fontSize: 13),
+                        hintStyle: TextStyle(color: Colors.white24, fontSize: 12),
                       ),
                     ),
                   ],
@@ -484,17 +926,17 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
                 _buildOccasionChip('🍔 Dinner', 'RocoMamas Saturday Dinner 🍔'),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 _buildOccasionChip('🚕 Taxi Fare', 'Taxi to Sandton City 🚕'),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 _buildOccasionChip('🍻 Drinks', 'Drinks at Tigers Milk 🍻'),
-                const SizedBox(width: 8),
+                const SizedBox(width: 6),
                 _buildOccasionChip('🛒 Groceries', 'Braai groceries at Woolies 🛒'),
               ],
             ),
@@ -513,27 +955,27 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
           _titleCtrl.text = fullTitle;
         });
       },
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(10),
       child: Container(
-        constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+        constraints: const BoxConstraints(minHeight: 36),
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
           color: isSelected
               ? ZippyTheme.splitPurple.withValues(alpha: 0.25)
-              : ZippyTheme.surfaceElevated,
-          borderRadius: BorderRadius.circular(12),
+              : const Color(0xFF1E293B),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: isSelected
                 ? ZippyTheme.splitPurple
-                : ZippyTheme.border,
+                : Colors.white.withValues(alpha: 0.08),
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
             color: isSelected ? Colors.white : Colors.white70,
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -549,103 +991,76 @@ class _SplitFareScreenState extends State<SplitFareScreen> {
     double equalShare,
   ) {
     final double fontSize = _totalCtrl.text.length >= 7
-        ? 28.0
+        ? 32.0
         : _totalCtrl.text.length >= 5
-            ? 36.0
-            : 44.0;
+            ? 42.0
+            : 54.0;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      decoration: BoxDecoration(
-        color: ZippyTheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: ZippyTheme.border),
-      ),
-      child: Column(
-        children: [
-          const Text(
-            'Total Bill Paid by You',
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'R ',
-                style: TextStyle(
-                  color: ZippyTheme.splitPurple,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Center(
+        child: Column(
+          children: [
+            const Text(
+              "What's the total bill?",
+              style: TextStyle(
+                color: Color(0xFF94A3B8),
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.2,
               ),
-              AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 150),
-                curve: Curves.easeOutCubic,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -1,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  'R ',
+                  style: TextStyle(
+                    color: total > 0 ? ZippyTheme.splitPurple : Colors.white38,
+                    fontSize: fontSize * 0.52,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeOutCubic,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1.5,
+                  ),
+                  child: Text(
+                    _totalCtrl.text,
+                    key: const Key('splitTotalField'),
+                  ),
+                ),
+              ],
+            ),
+            if (total > 0) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E293B),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
                 ),
                 child: Text(
-                  _totalCtrl.text,
-                  key: const Key('splitTotalField'),
+                  '÷ ${_selectedFriendNames.length + 1} people = R ${(total / (_selectedFriendNames.length + 1)).toStringAsFixed(2)} each',
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
-          ),
-          if (total > 0 && friendCount > 0) ...[
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: ZippyTheme.surfaceElevated,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'You: R ${hostShare.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: ZippyTheme.primaryGreen,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('•', style: TextStyle(color: Colors.white38)),
-                  const SizedBox(width: 8),
-                  Text(
-                    '$friendCount friends: R ${friendsSum.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
-                  if (!_isCustomSplit) ...[
-                    const SizedBox(width: 4),
-                    Text(
-                      '(R ${equalShare.toStringAsFixed(2)} ea)',
-                      style: const TextStyle(
-                        color: Colors.white54,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
           ],
-        ],
+        ),
       ),
     );
   }

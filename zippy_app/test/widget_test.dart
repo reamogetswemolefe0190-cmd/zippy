@@ -30,7 +30,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('zippy'), findsOneWidget);
-    expect(find.text('Pay simply.'), findsOneWidget);
+    expect(find.text('Pay Mode'), findsOneWidget);
   });
 
   testWidgets('Home screen opens with bold question and two distinct cards', (WidgetTester tester) async {
@@ -155,6 +155,10 @@ void main() {
     await tester.tap(find.byKey(const Key('numpad_0')));
     await tester.pumpAndSettle();
 
+    // Advance to Step 1: People & Portions
+    await tester.tap(find.byKey(const Key('splitStep1Continue')));
+    await tester.pumpAndSettle();
+
     // Verify portion modes (Equal vs Custom) with min 48px touch targets
     final equalPortionFinder = find.byKey(const Key('splitModeEqual'));
     final customPortionFinder = find.byKey(const Key('splitModeCustom'));
@@ -171,10 +175,14 @@ void main() {
     await tester.tap(find.byKey(const Key('splitModeEqual')));
     await tester.pumpAndSettle();
 
+    // Advance to Step 2: Summary & Dispatch
+    await tester.tap(find.byKey(const Key('splitStep2Continue')));
+    await tester.pumpAndSettle();
+
     // Dispatch split requests
     final dispatchBtn = find.byKey(const Key('dispatchSplitButton'));
     expect(dispatchBtn, findsOneWidget);
-    expect(find.textContaining('Create & Split R'), findsOneWidget);
+    expect(find.textContaining('Send split request'), findsOneWidget);
 
     await tester.tap(dispatchBtn);
     await tester.pump();
@@ -256,6 +264,10 @@ void main() {
     await tester.tap(find.byKey(const Key('numpad_0')));
     await tester.pumpAndSettle();
 
+    // Advance to Step 1: People & Portions
+    await tester.tap(find.byKey(const Key('splitStep1Continue')));
+    await tester.pumpAndSettle();
+
     // Toggle to Custom portions
     await tester.tap(find.byKey(const Key('splitModeCustom')));
     await tester.pumpAndSettle();
@@ -269,10 +281,10 @@ void main() {
     await tester.enterText(leratoField, '0');
     await tester.pumpAndSettle();
 
-    // Expect invalid error to display and dispatch button to be disabled
+    // Expect invalid error to display and continue button to be disabled
     expect(find.byKey(const Key('customPortionInvalidError')), findsOneWidget);
-    final dispatchBtn = tester.widget<ElevatedButton>(find.byKey(const Key('dispatchSplitButton')));
-    expect(dispatchBtn.onPressed, isNull);
+    final continueBtn = tester.widget<ElevatedButton>(find.byKey(const Key('splitStep2Continue')));
+    expect(continueBtn.onPressed, isNull);
 
     // 2. Test over-allocation exceeding total bill
     await tester.enterText(leratoField, '800');
@@ -284,10 +296,10 @@ void main() {
     await tester.enterText(siphoField, '800');
     await tester.pumpAndSettle();
 
-    // Expect over-allocation error to display and dispatch button to be disabled
+    // Expect over-allocation error to display and continue button to be disabled
     expect(find.byKey(const Key('customPortionExceedError')), findsOneWidget);
-    final dispatchBtnOver = tester.widget<ElevatedButton>(find.byKey(const Key('dispatchSplitButton')));
-    expect(dispatchBtnOver.onPressed, isNull);
+    final continueBtnOver = tester.widget<ElevatedButton>(find.byKey(const Key('splitStep2Continue')));
+    expect(continueBtnOver.onPressed, isNull);
 
     // Tap "Reset to Equal"
     final resetBtn = find.byKey(const Key('resetToEqualSharesButton'));
@@ -296,11 +308,15 @@ void main() {
     await tester.tap(resetBtn);
     await tester.pumpAndSettle();
 
-    // Errors should clear and dispatch button should be enabled
+    // Errors should clear and continue button should be enabled
     expect(find.byKey(const Key('customPortionInvalidError')), findsNothing);
     expect(find.byKey(const Key('customPortionExceedError')), findsNothing);
-    final dispatchBtnReset = tester.widget<ElevatedButton>(find.byKey(const Key('dispatchSplitButton')));
-    expect(dispatchBtnReset.onPressed, isNotNull);
+    final continueBtnReset = tester.widget<ElevatedButton>(find.byKey(const Key('splitStep2Continue')));
+    expect(continueBtnReset.onPressed, isNotNull);
+
+    // Advance to Step 2: Summary & Dispatch
+    await tester.tap(find.byKey(const Key('splitStep2Continue')));
+    await tester.pumpAndSettle();
 
     // Dispatch split
     await tester.tap(find.byKey(const Key('dispatchSplitButton')));
@@ -324,6 +340,12 @@ void main() {
     await tester.tap(find.byKey(const Key('numpad_3')));
     await tester.tap(find.byKey(const Key('numpad_0')));
     await tester.tap(find.byKey(const Key('numpad_0')));
+    await tester.pumpAndSettle();
+
+    // Advance through Step 1 and Step 2
+    await tester.tap(find.byKey(const Key('splitStep1Continue')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('splitStep2Continue')));
     await tester.pumpAndSettle();
 
     // Dispatch split
@@ -480,6 +502,12 @@ void main() {
     await tester.tap(find.byKey(const Key('numpad_0')));
     await tester.pumpAndSettle();
 
+    // Advance through Step 1 and Step 2
+    await tester.tap(find.byKey(const Key('splitStep1Continue')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('splitStep2Continue')));
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byKey(const Key('dispatchSplitButton')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
@@ -512,7 +540,7 @@ void main() {
     expect(find.text('45'), findsOneWidget);
     expect(find.textContaining("Bill at Siya's Tuck Shop"), findsOneWidget);
     expect(find.text('Split Settlement Live'), findsNothing);
-    expect(find.byKey(const Key('dispatchSplitButton')), findsOneWidget);
+    expect(find.byKey(const Key('splitStep1Continue')), findsOneWidget);
   });
 
   testWidgets('Quick Pay vendor selection clears previous vendor not found error banner', (WidgetTester tester) async {
@@ -617,6 +645,12 @@ void main() {
     await tester.tap(find.byKey(const Key('numpad_3')));
     await tester.tap(find.byKey(const Key('numpad_0')));
     await tester.tap(find.byKey(const Key('numpad_0')));
+    await tester.pumpAndSettle();
+
+    // Advance through Step 1 and Step 2
+    await tester.tap(find.byKey(const Key('splitStep1Continue')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('splitStep2Continue')));
     await tester.pumpAndSettle();
 
     final dispatchBtn = find.byKey(const Key('dispatchSplitButton'));

@@ -349,42 +349,30 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           children: [
             Container(
-              width: 38,
-              height: 38,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
                 color: ZippyTheme.surfaceElevated,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
               ),
               child: const Center(
                 child: ZippyLogo(
-                  size: 26,
+                  size: 22,
                   primaryColor: Colors.white,
                   accentColor: ZippyTheme.primaryGreen,
                 ),
               ),
             ),
-            const SizedBox(width: 10),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'zippy',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'Pay simply.',
-                  style: TextStyle(
-                    color: Color(0xFF94A3B8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+            const SizedBox(width: 8),
+            const Text(
+              'zippy',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.3,
+              ),
             ),
           ],
         ),
@@ -401,49 +389,49 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: TactileScale(
             child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(
-              color: isMerchant
-                  ? ZippyTheme.primaryGreen.withValues(alpha: 0.16)
-                  : Colors.white.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
                 color: isMerchant
-                    ? ZippyTheme.primaryGreen.withValues(alpha: 0.5)
-                    : Colors.white.withValues(alpha: 0.12),
+                    ? ZippyTheme.primaryGreen.withValues(alpha: 0.12)
+                    : Colors.white.withValues(alpha: 0.06),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: isMerchant
+                      ? ZippyTheme.primaryGreen.withValues(alpha: 0.4)
+                      : Colors.white.withValues(alpha: 0.1),
+                ),
               ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  isMerchant ? Icons.storefront_rounded : Icons.person_outline_rounded,
-                  size: 15,
-                  color: isMerchant ? ZippyTheme.primaryGreen : Colors.white70,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  isMerchant ? 'Merchant Hub' : 'Pay Mode',
-                  style: TextStyle(
-                    color: isMerchant ? ZippyTheme.primaryGreen : Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isMerchant ? Icons.storefront_rounded : Icons.person_outline_rounded,
+                    size: 14,
+                    color: isMerchant ? ZippyTheme.primaryGreen : Colors.white70,
                   ),
-                ),
-                const SizedBox(width: 3),
-                Icon(
-                  Icons.swap_horiz_rounded,
-                  size: 14,
-                  color: isMerchant ? ZippyTheme.primaryGreen : Colors.white38,
-                ),
-              ],
+                  const SizedBox(width: 5),
+                  Text(
+                    isMerchant ? 'Merchant Hub' : 'Pay Mode',
+                    style: TextStyle(
+                      color: isMerchant ? ZippyTheme.primaryGreen : Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(width: 3),
+                  Icon(
+                    Icons.swap_horiz_rounded,
+                    size: 13,
+                    color: isMerchant ? ZippyTheme.primaryGreen : Colors.white38,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   Widget _buildModePromptAndSegmentedControl() {
     return Column(
@@ -453,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'Who are you paying?',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.3,
           ),
@@ -463,9 +451,9 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 58,
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: ZippyTheme.surface,
+            color: const Color(0xFF0F172A),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: ZippyTheme.border),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.07)),
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -474,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return Stack(
                 children: [
-                  // Animated sliding spring indicator
+                  // Animated sliding slate indicator (refined slate instead of bulky neon)
                   AnimatedAlign(
                     alignment: _currentIndex == 0
                         ? Alignment.centerLeft
@@ -485,12 +473,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: pillWidth,
                       height: pillHeight,
                       decoration: BoxDecoration(
-                        color: ZippyTheme.primaryGreen,
-                        borderRadius: BorderRadius.circular(12),
+                        color: const Color(0xFF1E293B),
+                        borderRadius: BorderRadius.circular(11),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
                         boxShadow: [
                           BoxShadow(
-                            color: ZippyTheme.primaryGreen.withValues(alpha: 0.28),
-                            blurRadius: 10,
+                            color: Colors.black.withValues(alpha: 0.35),
+                            blurRadius: 6,
                             offset: const Offset(0, 2),
                           ),
                         ],
@@ -511,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               _currentIndex = 0;
                             });
                           },
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(11),
                           child: Container(
                             height: constraints.maxHeight,
                             alignment: Alignment.center,
@@ -522,20 +511,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _currentIndex == 0
                                       ? Icons.storefront
                                       : Icons.storefront_outlined,
-                                  size: 18,
+                                  size: 16,
                                   color: _currentIndex == 0
-                                      ? Colors.black
-                                      : Colors.white70,
+                                      ? ZippyTheme.primaryGreen
+                                      : Colors.white60,
                                 ),
-                                const SizedBox(width: 8),
+                                const SizedBox(width: 6),
                                 Text(
                                   'Merchant',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: _currentIndex == 0
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
                                     fontSize: 13,
                                     color: _currentIndex == 0
-                                        ? Colors.black
-                                        : Colors.white70,
+                                        ? Colors.white
+                                        : Colors.white60,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -555,7 +546,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               _currentIndex = 1;
                             });
                           },
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(11),
                           child: Container(
                             height: constraints.maxHeight,
                             alignment: Alignment.center,
@@ -566,20 +557,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _currentIndex == 1
                                       ? Icons.people
                                       : Icons.people_outline,
-                                  size: 18,
+                                  size: 16,
                                   color: _currentIndex == 1
-                                      ? Colors.black
-                                      : Colors.white70,
+                                      ? ZippyTheme.splitPurple
+                                      : Colors.white60,
                                 ),
-                                const SizedBox(width: 8),
+                                const SizedBox(width: 6),
                                 Text(
                                   'Split Fare',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: _currentIndex == 1
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
                                     fontSize: 13,
                                     color: _currentIndex == 1
-                                        ? Colors.black
-                                        : Colors.white70,
+                                        ? Colors.white
+                                        : Colors.white60,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -606,18 +599,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Quick-Pay Recent Vendors (Horizontal Cards)
-        const Text(
-          'QUICK PAY RECENT',
-          style: TextStyle(
-            color: Colors.white54,
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+        // 1. Recipient Input Card on top
+        _buildRecipientSection(),
+        const SizedBox(height: 10),
+
+        // 2. Light secondary Quick Pay Recent Chips immediately below Recipient
+        const Padding(
+          padding: EdgeInsets.only(left: 2, bottom: 6),
+          child: Text(
+            'QUICK PAY RECENT',
+            style: TextStyle(
+              color: Color(0xFF64748B),
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.0,
+            ),
           ),
         ),
-        const SizedBox(height: 8),
-
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -634,7 +632,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 vendorKey: 'quick_vendor_1082',
                 tillNumber: '1082',
                 name: "Mama Thembi's",
-                timeAgo: '2 days ago',
+                timeAgo: '2d ago',
                 amount: 25.0,
               ),
               const SizedBox(width: 8),
@@ -648,21 +646,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 6),
 
-        // Recipient Card with animated vendor verification reveal
-        _buildRecipientSection(),
-        const SizedBox(height: 12),
-
-        // Hero Amount Display: "You're paying" + R45.00 with optical scaling
+        // 3. Dominant Visual Center: Hero Amount Display (Uncarded, Generous Breathing Room)
         _buildAmountSection(),
-        const SizedBox(height: 12),
 
-        // Tactile ZarNumpad with 0.96 scale press-down animation
+        // 4. Tactile ZarNumpad with 0.96 scale press-down animation
         ZarNumpad(onKeyPressed: _onNumpad),
         const SizedBox(height: 16),
 
-        // Visual Conclusion CTA: [ Pay R45.00 ] with TactileScale micro-interaction
+        // 5. Visual Conclusion CTA: [ Pay R45.00 ] with TactileScale micro-interaction
         TactileScale(
           enabled: amount > 0 && !_isProcessing && _lookedUpVendor != null,
           child: SizedBox(
@@ -707,263 +700,146 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildAmountSection() {
+    final double amount = double.tryParse(_amountStr) ?? 0.0;
     final double fontSize = _amountStr.length >= 7
-        ? 30.0
+        ? 34.0
         : _amountStr.length >= 5
-            ? 38.0
-            : 48.0;
+            ? 44.0
+            : 56.0;
 
-    return Center(
-      child: Column(
-        children: [
-          const Text(
-            "You're paying",
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Center(
+        child: Column(
+          children: [
+            const Text(
+              "You're paying",
+              style: TextStyle(
+                color: Color(0xFF94A3B8),
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.2,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              const Text(
-                'R ',
-                style: TextStyle(
-                  color: ZippyTheme.primaryGreen,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+            const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  'R ',
+                  style: TextStyle(
+                    color: amount > 0 ? ZippyTheme.primaryGreen : Colors.white38,
+                    fontSize: fontSize * 0.52,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 150),
-                curve: Curves.easeOutCubic,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -1,
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeOutCubic,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1.5,
+                  ),
+                  child: Text(
+                    _amountStr,
+                    key: const Key('homeAmountDisplay'),
+                  ),
                 ),
-                child: Text(
-                  _amountStr,
-                  key: const Key('homeAmountDisplay'),
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildRecipientSection() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: ZippyTheme.surface,
+        color: const Color(0xFF0F172A),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: _lookedUpVendor != null
-              ? ZippyTheme.primaryGreen.withValues(alpha: 0.3)
-              : ZippyTheme.border,
+              ? ZippyTheme.primaryGreen.withValues(alpha: 0.4)
+              : Colors.white.withValues(alpha: 0.08),
         ),
       ),
-      child: AnimatedSize(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeOutCubic,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Paying',
-                  style: TextStyle(
-                    color: Colors.white54,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  'Till Code',
-                  style: TextStyle(
-                    color: ZippyTheme.primaryGreen,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.storefront,
-                    color: ZippyTheme.primaryGreen,
-                    size: 20,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              _lookedUpVendor?.name ?? 'Enter Till Number',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          if (_lookedUpVendor != null) ...[
-                            const SizedBox(width: 6),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(color: ZippyTheme.primaryGreen, width: 0.8),
-                              ),
-                              child: const Text(
-                                'VERIFIED',
-                                style: TextStyle(
-                                  color: ZippyTheme.primaryGreen,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 9,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        _lookedUpVendor != null
-                            ? '✓ Verified • ${_lookedUpVendor!.bankName}'
-                            : '4-digit code required',
-                        style: TextStyle(
-                          color: _lookedUpVendor != null
-                              ? ZippyTheme.primaryGreen
-                              : Colors.white38,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (_isLoadingVendor)
-                  const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: ZippyTheme.primaryGreen),
-                  )
-                else
-                  Container(
-                    width: 80,
-                    constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: ZippyTheme.surfaceElevated,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-                    ),
-                    child: TextField(
-                      key: const Key('homeZippyNumberField'),
-                      controller: _merchantZippyController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      maxLength: 4,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        border: InputBorder.none,
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 14),
-                        hintText: '####',
-                        hintStyle: TextStyle(color: Colors.white24, fontSize: 13),
-                      ),
-                      onChanged: (val) => _lookupMerchant(val),
-                    ),
-                  ),
-              ],
-            ),
-            if (_lookedUpVendor != null) ...[
-              const SizedBox(height: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
               Container(
-                key: const Key('homeVendorBankDetailsCard'),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: ZippyTheme.surfaceElevated,
+                  color: _lookedUpVendor != null
+                      ? ZippyTheme.primaryGreen.withValues(alpha: 0.15)
+                      : Colors.white.withValues(alpha: 0.06),
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Icon(
+                  Icons.storefront_outlined,
+                  color: _lookedUpVendor != null
+                      ? ZippyTheme.primaryGreen
+                      : Colors.white70,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.account_balance, size: 14, color: ZippyTheme.primaryGreen),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${_lookedUpVendor!.bankName} (•••• ${_lookedUpVendor!.accountNumber.length >= 4 ? _lookedUpVendor!.accountNumber.substring(_lookedUpVendor!.accountNumber.length - 4) : _lookedUpVendor!.accountNumber})',
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
+                        Flexible(
+                          child: Text(
+                            _lookedUpVendor?.name ?? 'Enter till number',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        if (_lookedUpVendor != null) ...[
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                            decoration: BoxDecoration(
+                              color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: ZippyTheme.primaryGreen, width: 0.8),
+                            ),
+                            child: const Text(
+                              'VERIFIED',
+                              style: TextStyle(
+                                color: ZippyTheme.primaryGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
+                    const SizedBox(height: 2),
                     Text(
-                      _lookedUpVendor!.category,
-                      style: const TextStyle(color: Colors.white38, fontSize: 11),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-            if (_vendorNotFound) ...[
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEF4444).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.error_outline, color: Color(0xFFEF4444), size: 14),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Till #${_merchantZippyController.text} not registered on Zippy',
-                      key: const Key('homeVendorNotFoundMessage'),
-                      style: const TextStyle(
-                        color: Color(0xFFEF4444),
+                      _lookedUpVendor != null
+                          ? '✓ Verified • ${_lookedUpVendor!.bankName}'
+                          : '4-digit merchant number',
+                      style: TextStyle(
+                        color: _lookedUpVendor != null
+                            ? ZippyTheme.primaryGreen
+                            : const Color(0xFF94A3B8),
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                       ),
@@ -971,9 +847,109 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              if (_isLoadingVendor)
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: ZippyTheme.primaryGreen),
+                )
+              else
+                Container(
+                  width: 76,
+                  constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1E293B),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                  ),
+                  child: TextField(
+                    key: const Key('homeZippyNumberField'),
+                    controller: _merchantZippyController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    maxLength: 4,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                    decoration: const InputDecoration(
+                      counterText: '',
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                      hintText: '####',
+                      hintStyle: TextStyle(color: Colors.white24, fontSize: 13),
+                    ),
+                    onChanged: (val) => _lookupMerchant(val),
+                  ),
+                ),
             ],
+          ),
+          if (_lookedUpVendor != null) ...[
+            const SizedBox(height: 8),
+            Container(
+              key: const Key('homeVendorBankDetailsCard'),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E293B),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.account_balance, size: 13, color: ZippyTheme.primaryGreen),
+                      const SizedBox(width: 5),
+                      Text(
+                        '${_lookedUpVendor!.bankName} (•••• ${_lookedUpVendor!.accountNumber.length >= 4 ? _lookedUpVendor!.accountNumber.substring(_lookedUpVendor!.accountNumber.length - 4) : _lookedUpVendor!.accountNumber})',
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    _lookedUpVendor!.category,
+                    style: const TextStyle(color: Colors.white38, fontSize: 11),
+                  ),
+                ],
+              ),
+            ),
           ],
-        ),
+          if (_vendorNotFound) ...[
+            const SizedBox(height: 6),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: const Color(0xFFEF4444).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.error_outline, color: Color(0xFFEF4444), size: 13),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Till #${_merchantZippyController.text} not registered on Zippy',
+                    key: const Key('homeVendorNotFoundMessage'),
+                    style: const TextStyle(
+                      color: Color(0xFFEF4444),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
@@ -1002,42 +978,55 @@ class _HomeScreenState extends State<HomeScreen> {
         );
         _onQuickPayVendorSelected(vendor, amount);
       },
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(20),
       child: Container(
-        constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        constraints: const BoxConstraints(minHeight: 48),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: ZippyTheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: ZippyTheme.border),
+          color: const Color(0xFF0F172A),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.storefront_outlined,
-                  color: ZippyTheme.primaryGreen,
-                  size: 14,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
+            Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: ZippyTheme.primaryGreen.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.bolt_rounded,
+                color: ZippyTheme.primaryGreen,
+                size: 13,
+              ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(width: 7),
             Text(
-              'R ${amount.toInt()} • $timeAgo',
-              style: const TextStyle(color: Colors.white54, fontSize: 11),
+              name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+            const SizedBox(width: 6),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                'R ${amount.toInt()}',
+                style: const TextStyle(
+                  color: ZippyTheme.primaryGreen,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
